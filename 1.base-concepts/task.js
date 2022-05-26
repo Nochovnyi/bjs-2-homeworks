@@ -25,49 +25,39 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let dateNow = new Date().getTime();
   date = date.getTime();
   let creditTime = (+date) - (+dateNow);
-  let percentWarning = `"Параметр "Процентная ставка" содержит неправильное значение ${percent}"`;
-  let contributionWarning = `"Параметр "Начальный взнос" содержит неправильное значение ${contribution}"`;
-  let amountWarning = `"Параметр "Общая стоимость" содержит неправильное значение ${amount}"`;
-  let dateWarning = "Вы не указали дату";
 
-  if (percent === "") {
-   return percentWarning;
+  const percentParam = Number(percent);
+  const contributionParam = Number(contribution);
+  const amountParam = Number(amount);
+
+  const percentWarning = `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
+  const contributionWarning = `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
+  const amountWarning = `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
+  const dateWarning = "Вы не указали дату";
+  
+
+  if (Number.isFinite(percentParam)) {
+    
+  } else {
+    return percentWarning;
   }
 
-    percent = Number(percent);
+  if (Number.isFinite(contributionParam) ) {
+  
+  } else { 
+    return contributionWarning
+  }
 
-    if (percent !== percent){
-   return percentWarning;
-    }
+  if (isNaN(amountParam)) {
+    return amountWarning;
+  } 
 
-    if (contribution === "") {
-      return contributionWarning;
-     }
-     contribution = Number(contribution)
-   
-       if (contribution !== contribution){
-      return contributionWarning;
-       }
-
-       if (amount === "") {
-        return amountWarning;
-       }
-
-       amount = Number(amount);
-     
-         if (amount !== amount){
-        return amountWarning;
-         }
-
-         if (date !== date) {
-          return dateWarning;
-         }
 
     
-    let bodyCredit = amount - contribution;
+    let bodyCredit = amountParam - contributionParam;
     creditTime = (creditTime / 1000 / 60 / 60 / 24 / 365) * 12;
     creditTime = Math.round(creditTime);
-    monthPay = bodyCredit * ((percent/100/12) + ((percent/100/12) / (((1 + (percent/100/12))**creditTime) - 1)));
+    monthPay = bodyCredit * ((percentParam/100/12) + ((percentParam/100/12) / (((1 + (percentParam/100/12))**creditTime) - 1)));
   
     totalAmount = monthPay * creditTime;
     totalAmount = totalAmount.toFixed(2);
